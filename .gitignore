@@ -1,0 +1,10 @@
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+
+# Env files (belt-and-suspenders — subfolders also ignore these)
+.env
+.env.local
