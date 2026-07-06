@@ -1,6 +1,8 @@
 import express from "express"
 import dotenv from "dotenv"
 import cors from "cors"
+import runsRouter from "./routes/runs";
+import { connectDB } from "./db";
 
 dotenv.config();
 
@@ -18,6 +20,13 @@ app.get('/api/health', (req, res)=>{
     res.json({status:'ok', service:'relay-backend'});
 });
 
-app.listen(PORT, ()=>{
-    console.log(`relay-backend is running on port ${PORT}`);
-});
+app.use('/api/runs', runsRouter)
+
+const start = async() => {
+    await connectDB();
+    app.listen(PORT, ()=>{
+        console.log(`relay-backend is running on port ${PORT}`);
+    });
+}
+
+start();

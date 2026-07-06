@@ -1,18 +1,19 @@
-import { useEffect, useState } from "react";
-import { checkHealth } from "./api/health";
+import { useState } from "react";
+import GoalInput from '../src/components/GoalInput'
+import type { IRun } from "./types";
 
 function App(){
-  const [status, setStatus] = useState<string>('Checking...');
-
-  useEffect(()=>{
-    checkHealth()
-    .then((res)=> setStatus(res.status))
-    .catch(()=> setStatus("Backend unreachable"));
-  }, []);
+  const [ latestRun, setLatestRun] = useState<IRun | null>(null)
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
-      <p className="text-xl">Backend Status: <span className="font-bond">{status}</span></p>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white gap-6 p-6">
+      <h1 className="text-2xl font-bold">RelayAI</h1>
+      <GoalInput onRunCreated={setLatestRun}/>
+      { latestRun && (
+        <p className="text-sm text-gray-400">
+          Run created: <span className="font-mono">{latestRun._id}</span> - status: {latestRun.status}
+        </p>
+      )}
     </div>
   )
 }
