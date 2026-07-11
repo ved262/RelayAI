@@ -3,8 +3,10 @@ dotenv.config();
 
 import express from "express"
 import cors from "cors"
-import runsRouter from "./routes/runs";
+import runsRouter, { setSocketServer } from "./routes/runs";
 import { connectDB } from "./db";
+import { Server } from "socket.io"
+import { createServer } from "node:http";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,9 +24,22 @@ app.get('/api/health', (req, res)=>{
 
 app.use('/api/runs', runsRouter)
 
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+    cors: { origin: process.env.FRONTEND_URL || "http://localhost:5173" }
+})
+
+io.on('connection',(socket)=>{
+    socket.on('join:run', (runId: string)=>{
+        socket.join(runId);
+    })
+})
+
+setSocketServer(io);
+
 const start = async() => {
     await connectDB();
-    app.listen(PORT, ()=>{
+    httpServer.listen(PORT, ()=>{
         console.log(`relay-backend is running on port ${PORT}`);
     });
 }
