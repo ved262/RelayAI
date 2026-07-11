@@ -1,14 +1,23 @@
 export type RunStatus = 'pending' | 'in_progress' | 'complete' | 'failed'
 
+export type AgentName = 'reasearcher' | 'summarizer' | 'writer';
+
 export interface IAgentOutput{
-    agent: 'reasearcher' | 'summarizer' | 'writer';
+    agent: AgentName;
     output: 'string';
     completedAt: Date;
+}
+
+
+export interface ISubTaskPlan{
+    agent: AgentName;
+    instructions: string;
 }
 
 export interface IRun{
     goal: string;
     status: RunStatus;
+    plan: ISubTaskPlan[];
     agentOutputs: IAgentOutput[];
     finalResult?: string;
     createdAt?: Date;

@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { IAgentOutput, IRun } from "../types";
+import { IAgentOutput, IRun, ISubTaskPlan } from "../types";
 
 const agentOutputSchema = new Schema<IAgentOutput>({
     agent: {
@@ -16,6 +16,17 @@ const agentOutputSchema = new Schema<IAgentOutput>({
     }
 }, { _id: false})
 
+const subtaskPlanSchema = new Schema<ISubTaskPlan>({
+    agent: {
+        enum: ['researcher', 'summarizer', 'writer'],
+        required: true
+    },
+    instructions: {
+        type: String,
+        required: true
+    }
+}, {_id: false})
+
 const runSchema = new Schema<IRun>({
     goal: {
         type: String,
@@ -29,6 +40,10 @@ const runSchema = new Schema<IRun>({
     },
     agentOutputs: {
         type: [agentOutputSchema],
+        default: []
+    },
+    plan: {
+        type: [subtaskPlanSchema],
         default: []
     },
     finalResult: {
