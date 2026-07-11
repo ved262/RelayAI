@@ -3,10 +3,11 @@ dotenv.config();
 
 import express from "express"
 import cors from "cors"
-import runsRouter, { setSocketServer } from "./routes/runs";
+import runsRouter from "./routes/runs";
 import { connectDB } from "./db";
 import { Server } from "socket.io"
 import { createServer } from "node:http";
+import { setSocketServer } from "./controllers/runs.controller";
 
 const app = express();
 const PORT = process.env.PORT || 3000;

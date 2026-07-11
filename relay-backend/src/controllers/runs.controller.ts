@@ -2,6 +2,12 @@ import { NextFunction, Request, Response } from "express"
 import { IApiError } from "../types";
 import { Run } from "../models/Run";
 import { runPipeline } from "../services/runPipeline";
+import { Server } from "socket.io";
+
+let ioInstance: Server;
+export function setSocketServer(io:Server){
+    ioInstance = io;
+}
 
 export const createRun = async (req: Request, res: Response) => {
     const { goal } = req.body;
@@ -11,7 +17,7 @@ export const createRun = async (req: Request, res: Response) => {
 
     try {
         const run = await Run.create({ goal: goal.trim() });
-        runPipeline(run._id.toString());
+        runPipeline(run._id.toString(), ioInstance);
         return res.status(201).json(run);
     } catch (error) {
         console.error('Failed to create run: ', error);
