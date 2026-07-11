@@ -10,7 +10,7 @@ Respond ONLY with valid JSON, no markdown formatting, no preamble. Use this exac
   { "agent": "writer", "instructions": "..." }
 ]`;
 
-export async function generatePlan(goal: string){
+export async function generatePlan(goal: string): Promise<ISubTaskPlan[]>{
     const response = await openai.chat.completions.create({
         model: MODEL,
         messages: [
@@ -30,7 +30,7 @@ export async function generatePlan(goal: string){
         throw new Error('Orchestrator returned an empty response');
     }
     try{
-        return JSON.parse(raw) as ISubTaskPlan
+        return JSON.parse(raw) as ISubTaskPlan[];
     }catch(err){
         throw new Error(`Orchestrator returned invalid JSON: ${raw}`);
     }

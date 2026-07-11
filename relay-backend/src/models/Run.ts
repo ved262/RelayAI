@@ -4,8 +4,8 @@ import { IAgentOutput, IRun, ISubTaskPlan } from "../types";
 const agentOutputSchema = new Schema<IAgentOutput>({
     agent: {
         type: String,
-        enum: ['reasearcher','summarizer','writer'],
-        required: true 
+        enum: ['researcher', 'summarizer', 'writer'],
+        required: true
     },
     output: {
         type: String,
@@ -14,10 +14,11 @@ const agentOutputSchema = new Schema<IAgentOutput>({
     completedAt: {
         type: Date
     }
-}, { _id: false})
+}, { _id: false })
 
 const subtaskPlanSchema = new Schema<ISubTaskPlan>({
     agent: {
+        type: String,
         enum: ['researcher', 'summarizer', 'writer'],
         required: true
     },
@@ -25,7 +26,7 @@ const subtaskPlanSchema = new Schema<ISubTaskPlan>({
         type: String,
         required: true
     }
-}, {_id: false})
+}, { _id: false })
 
 const runSchema = new Schema<IRun>({
     goal: {

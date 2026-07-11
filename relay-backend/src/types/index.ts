@@ -1,10 +1,10 @@
 export type RunStatus = 'pending' | 'in_progress' | 'complete' | 'failed'
 
-export type AgentName = 'reasearcher' | 'summarizer' | 'writer';
+export type AgentName = 'researcher' | 'summarizer' | 'writer';
 
 export interface IAgentOutput{
     agent: AgentName;
-    output: 'string';
+    output: string;
     completedAt: Date;
 }
 

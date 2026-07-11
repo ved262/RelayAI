@@ -2,7 +2,7 @@ import { MODEL, openai } from "../lib/openai"
 
 const SYSTEM_PROMPT = `You are a research assistant. Given instructions, provide a thorough, factual research summary based on your knowledge. Be specific and organized. Do not fabricate sources or citations.`
 
-export async function runResearcher(instructions: string) {
+export async function runResearcher(instructions: string): Promise<string> {
     const response = await openai.chat.completions.create({
         model: MODEL,
         messages: [{

@@ -1,8 +1,10 @@
 import { Router } from 'express'
-import { createRun } from '../controllers/runs.controller';
+import { createRun, getRun } from '../controllers/runs.controller';
 
 const router = Router();
 
 router.post('/', createRun);
+
+router.get('/:id', getRun);
 
 export default router;
