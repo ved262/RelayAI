@@ -58,10 +58,12 @@ export async function runPipeline(runId: string, io: Server) {
         io.to(runId).emit('agent:completed', { agent: 'writer', output: writerOutput });
 
         io.to(runId).emit('run:completed', { runId, finalResult: writerOutput });
+        io.socketsLeave(runId);
 
     } catch (err) {
         console.error(`Pipeline failed for run ${runId}:`, err);
         await Run.findByIdAndUpdate(runId, { status: 'failed' });
         io.to(runId).emit('run:failed', { error: (err as Error).message});
+        io.socketsLeave(runId);
     }
 }

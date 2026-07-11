@@ -21,6 +21,7 @@ export function useSocket(runId: string | null, initialRun: IRun | null): IUseSo
     useEffect(()=>{
         if(!runId) return;
         const socket = io(SOCKET_URL);
+        socketRef.current = socket
 
         socket.emit('join:run', runId);
         socket.on('agent:started', ({ agent }: { agent: AgentName})=>{
@@ -40,11 +41,13 @@ export function useSocket(runId: string | null, initialRun: IRun | null): IUseSo
         socket.on('run:completed', ({ finalResult }: { finalResult: string})=>{
             setActiveAgent(null);
             setLiveRun((prev)=> ( prev ? { ... prev, status: 'completed', finalResult }: prev));
+            socket.disconnect();
         });
 
         socket.on('run:failed', ()=>{
             setActiveAgent(null);
             setLiveRun((prev)=> prev ? { ...prev, status: 'failed' }: prev);
+            socket.disconnect();
         })
 
         return () => {
