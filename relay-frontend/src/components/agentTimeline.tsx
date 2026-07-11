@@ -4,7 +4,7 @@ const AGENTS: AgentName[] = ['researcher', 'summarizer', 'writer'];
 
 interface IAgentTimelineProps {
     agentOutputs: IAgentOutput[];
-    activeAgent: AgentName;
+    activeAgent: AgentName | null;
 }
 
 function AgentTimeline({ agentOutputs, activeAgent }: IAgentTimelineProps) {
