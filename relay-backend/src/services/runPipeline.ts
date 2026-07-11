@@ -1,5 +1,7 @@
 import { generatePlan } from "../agents/orchestrator";
 import { runResearcher } from "../agents/researcher";
+import { runSummarizer } from "../agents/summarizer";
+import { runWriter } from "../agents/writer";
 import { Run } from "../models/Run";
 
 export async function runPipeline(runId: string) {
@@ -15,7 +17,9 @@ export async function runPipeline(runId: string) {
         run.save();
 
         const researcherTask = plan.find((p)=> p.agent === 'researcher');
-        if(!researcherTask) throw new Error('No researcher subtask in plan')
+        const summaryTask = plan.find((p)=> p.agent === 'summarizer');
+        const writerTask = plan.find((p)=> p.agent === 'writer');
+        if(!researcherTask || !summaryTask || !writerTask) throw new Error('Plan is missing one or more required agent subtasks');
 
         const researcherOutput = await runResearcher(researcherTask.instructions);
         run.agentOutputs.push({
@@ -23,6 +27,26 @@ export async function runPipeline(runId: string) {
             output: researcherOutput,
             completedAt: new Date()
         })
+        await run.save();
+
+        
+        const summaryOutput = await runSummarizer(summaryTask.instructions, researcherOutput);
+        run.agentOutputs.push({
+            agent: 'summarizer',
+            output: summaryOutput,
+            completedAt: new Date()
+        });
+        await run.save();
+
+        const writerOutput = await runWriter(writerTask.instructions, summaryOutput);
+        run.agentOutputs.push({
+            agent: 'writer',
+            output: writerOutput,
+            completedAt: new Date()
+        })
+
+        run.finalResult = writerOutput;
+        run.status = 'completed'
         await run.save();
 
     } catch (err) {

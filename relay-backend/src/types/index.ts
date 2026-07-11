@@ -1,4 +1,4 @@
-export type RunStatus = 'pending' | 'in_progress' | 'complete' | 'failed'
+export type RunStatus = 'pending' | 'in_progress' | 'completed' | 'failed'
 
 export type AgentName = 'researcher' | 'summarizer' | 'writer';
 

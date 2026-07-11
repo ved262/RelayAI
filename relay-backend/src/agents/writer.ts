@@ -3,7 +3,7 @@ import { MODEL, openai } from "../lib/openai"
 const SYSTEM_PROMPT = `You are a writing assistant. Given a summary and instructions, 
 produce a well-written, polished final piece suitable for sharing. Use clear structure and natural tone.`
 
-export async function runWrite(instructions: string, summaryOutput: string): Promise<string> {
+export async function runWriter(instructions: string, summaryOutput: string): Promise<string> {
     const res = await openai.chat.completions.create({
         model: MODEL,
         messages: [{
