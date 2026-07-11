@@ -6,3 +6,8 @@ export async function createRun(goal: string){
     const res = await axios.post(`${API_URL}/api/runs`, { goal });
     return res.data;
 }
+
+export async function getRun(id: string){
+    const res = await axios.get(`${API_URL}/api/runs/${id}`);
+    return res.data;
+}
