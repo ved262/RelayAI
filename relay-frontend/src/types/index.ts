@@ -18,7 +18,7 @@ export interface IRun{
     status: RunStatus;
     plan: ISubtaskPlan[];
     agentOutputs: IAgentOutput[];
-    result: string;
+    finalResult: string;
     createdAt: string;
     updatedAt: string;
 }

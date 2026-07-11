@@ -36,7 +36,7 @@ const runSchema = new Schema<IRun>({
     },
     status: {
         type: String,
-        enum: ['pending', 'in_progress', 'complete', 'failed'],
+        enum: ['pending', 'in_progress', 'completed', 'failed'],
         default: 'pending'
     },
     agentOutputs: {

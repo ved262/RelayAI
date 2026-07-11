@@ -32,6 +32,12 @@ function App(){
               <p className="text-gray-300 whitespace-pre-wrap">{a.output}</p>
             </div>
           ))}
+          {latestRun.status === 'completed' && latestRun.finalResult && (
+            <div className="mt-4 bg-green-900/30 border border-green-700 p-4 rounded-md">
+              <p className="font-semibold text-green-400 mb-2">Final Result</p>
+              <p className="text-gray-200 whitespace-pre-wrap">{latestRun.finalResult}</p>
+            </div>
+          )}
         </div>
       )}
     </div>
