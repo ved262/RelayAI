@@ -4,7 +4,7 @@ export type AgentName = 'researcher' | 'summarizer' | 'writer'
 export interface IAgentOutput{
     agent: AgentName;
     output: string;
-    completedAt: string;
+    completedAt?: string;
 }
 
 export interface ISubtaskPlan{
