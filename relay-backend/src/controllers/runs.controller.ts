@@ -5,7 +5,7 @@ import { runPipeline } from "../services/runPipeline";
 import { Server } from "socket.io";
 
 let ioInstance: Server;
-export function setSocketServer(io:Server){
+export function setSocketServer(io: Server) {
     ioInstance = io;
 }
 
@@ -26,7 +26,7 @@ export const createRun = async (req: Request, res: Response) => {
 }
 
 
-export const getRun = async (req: Request, res: Response, next: NextFunction) => {
+export const getRunById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const runId = req.params.id;
         const run = await Run.findById(runId);
@@ -37,5 +37,16 @@ export const getRun = async (req: Request, res: Response, next: NextFunction) =>
     } catch (error) {
         console.error('Failed to fetch run: ', error);
         return res.status(500).json({ error: 'Failed to fetch run.' } as IApiError)
+    }
+}
+
+
+export const getRuns = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const runs = await Run.find().select('goal status finalResult createAt updatedAt').sort({ createdAt: -1 }).limit(50);
+        return res.status(200).json(runs);
+    } catch (err) {
+        console.error('Failed to fetch runs: ', err);
+        return res.status(500).json({ error: 'Failed to fetch runs.' } as IApiError)
     }
 }
