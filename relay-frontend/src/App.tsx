@@ -2,10 +2,10 @@ import { useState } from "react";
 import GoalInput from '../src/components/GoalInput'
 import type { IRun } from "./types";
 import { useSocket } from "./hooks/useSocket";
-import AgentTimeline from "./components/AgentTimeline";
 import { getRunById } from "./api/runs";
 import RunHistory from "./components/RunHistory";
 import ResultPanel from "./components/ResultPanel";
+import AgentTimeline from "./components/agentTimeline";
 
 function App() {
   const [createdRun, setCreatedRun] = useState<IRun | null>(null);
