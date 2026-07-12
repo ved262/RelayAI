@@ -1,6 +1,6 @@
 # RelayAI
 
-Give it a goal, watch AI agents relay it step by step — research, summarize, and write — until the job's done.
+Give it a goal, watch AI agents relay it step by step — research, summarize, and write — until the job's done powered by OpenAI GPT-4o-mini.
 
 RelayAI is a multi-agent task automation system. A user submits a high-level goal; an **Orchestrator** agent breaks it into subtasks, and three specialized agents — **Researcher**, **Summarizer**, and **Writer** — execute them in sequence, handing their output forward like a relay. Progress streams to the frontend in real time via WebSockets.
 
