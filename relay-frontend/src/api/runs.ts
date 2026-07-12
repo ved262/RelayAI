@@ -13,6 +13,6 @@ export async function getRunById(id: string){
 }
 
 export async function getRuns(){
-    const res = await axios.get(`${API_URL}/runs`);
+    const res = await axios.get(`${API_URL}/api/runs`);
     return res.data;
 }
