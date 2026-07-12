@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import GoalInput from '../src/components/GoalInput'
 import type { IRun } from "./types";
-import { getRun } from "./api/runs";
 import { useSocket } from "./hooks/useSocket";
 import AgentTimeline from "./components/agentTimeline";
 

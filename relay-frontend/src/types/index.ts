@@ -22,3 +22,12 @@ export interface IRun{
     createdAt: string;
     updatedAt: string;
 }
+
+export interface IRunSummary{
+    _id: string;
+    goal: string;
+    status: string;
+    finalResult?: string;
+    createdAt: string;
+    updatedAt: string;
+}

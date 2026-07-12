@@ -7,7 +7,12 @@ export async function createRun(goal: string){
     return res.data;
 }
 
-export async function getRun(id: string){
+export async function getRunById(id: string){
     const res = await axios.get(`${API_URL}/api/runs/${id}`);
+    return res.data;
+}
+
+export async function getRuns(){
+    const res = await axios.get(`${API_URL}/runs`);
     return res.data;
 }
