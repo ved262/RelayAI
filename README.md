@@ -4,11 +4,7 @@ Give it a goal, watch AI agents relay it step by step — research, summarize, a
 
 RelayAI is a multi-agent task automation system. A user submits a high-level goal; an **Orchestrator** agent breaks it into subtasks, and three specialized agents — **Researcher**, **Summarizer**, and **Writer** — execute them in sequence, handing their output forward like a relay. Progress streams to the frontend in real time via WebSockets.
 
----
-
-## Demo
-
-> _Add a screen recording or GIF here once deployed — this is the single highest-impact thing you can add to this README for a portfolio piece._
+**Live Demo:** [relay-os1l94ebd-vb-dev2.vercel.app](https://relay-os1l94ebd-vb-dev2.vercel.app/)
 
 ---
 
