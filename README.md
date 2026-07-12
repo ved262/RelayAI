@@ -77,27 +77,28 @@ This follows an **Orchestrator-Worker pattern**: a central planner decomposes a 
 relayai/
 ├── relay-backend/
 │   ├── src/
-│   │   ├── server.ts          # Express + Socket.io entry point
-│   │   ├── db.ts               # MongoDB connection
-│   │   ├── types/               # Shared TypeScript interfaces
-│   │   ├── models/Run.ts        # Mongoose schema
-│   │   ├── lib/openai.ts        # OpenAI client config
-│   │   ├── agents/               # orchestrator, researcher, summarizer, writer
-│   │   ├── services/runPipeline.ts  # Chains agents, persists + emits progress
-│   │   └── routes/runs.ts       # REST API
+│   │   ├── server.ts                  # Express + Socket.io entry point
+│   │   ├── db.ts                      # MongoDB connection
+│   │   ├── types/                     # Shared TypeScript interfaces
+│   │   ├── models/Run.ts              # Mongoose schema
+│   │   ├── lib/openai.ts              # OpenAI client config
+│   │   ├── agents/                    # orchestrator, researcher, summarizer, writer
+│   │   ├── controllers/runs.controller.ts  # REST handlers + socket wiring
+│   │   ├── services/runPipeline.ts    # Chains agents, persists + emits progress
+│   │   └── routes/runs.ts             # REST API routes
 │   └── package.json
 │
 ├── relay-frontend/
 │   ├── src/
 │   │   ├── App.tsx
-│   │   ├── components/           # GoalInput, AgentTimeline, ResultPanel, RunHistory, etc.
-│   │   ├── hooks/useSocket.ts     # Live run updates via WebSocket
-│   │   ├── api/runs.ts           # REST calls
-│   │   └── types/
+│   │   ├── api/                      # health.ts, runs.ts
+│   │   ├── components/               # GoalInput, AgentTimeline, ResultPanel, RunHistory, etc.
+│   │   ├── hooks/useSocket.ts        # Live run updates via WebSocket
+│   │   ├── types/                    # Frontend TypeScript types
+│   │   └── main.tsx
 │   └── package.json
 │
-└── docs/
-    └── mentor-system-prompt.md
+└── README.md
 ```
 
 ---
@@ -118,14 +119,14 @@ cp .env.example .env   # fill in MONGODB_URI, OPENAI_API_KEY, FRONTEND_URL
 npm run dev
 ```
 
-Runs on `http://localhost:5000`. Confirm with `GET /health`.
+Runs on `http://localhost:3000`. Confirm with `GET /api/health`.
 
 ### Frontend
 
 ```bash
 cd relay-frontend
 npm install
-echo "VITE_API_URL=http://localhost:5000" > .env
+echo "VITE_API_URL=http://localhost:3000" > .env
 npm run dev
 ```
 
@@ -137,10 +138,10 @@ Runs on `http://localhost:5173`.
 
 | Method | Endpoint | Description |
 |---|---|---|
-| POST | `/api/runs` | Submit a goal, starts the agent pipeline |
+| POST | `/api/runs` | Submit a goal and start the agent pipeline |
 | GET | `/api/runs` | List the 50 most recent runs (summary fields only) |
 | GET | `/api/runs/:id` | Get a specific run with full agent output and plan |
-| GET | `/health` | Server health check |
+| GET | `/api/health` | Server health check |
 
 ## WebSocket Events
 
@@ -151,7 +152,7 @@ Runs on `http://localhost:5173`.
 | `agent:started` | server → client | `{ agent }` |
 | `agent:completed` | server → client | `{ agent, output }` |
 | `run:completed` | server → client | `{ runId, finalResult }` |
-| `run:failed` | server → client | `{ runId, error }` |
+| `run:failed` | server → client | `{ error }` |
 
 ---
 
@@ -179,6 +180,3 @@ Documented honestly, not glossed over:
 
 ---
 
-## License
-
-MIT
